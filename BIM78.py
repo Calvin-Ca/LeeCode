@@ -36,3 +36,31 @@ class Solution:
             # dp[3]开始才有值
         
         return dfs(n)  # 抢到第n家时的最大值，第n家已经做出决策
+
+class Solution:
+    def rob(self , nums: List[int]) -> int:
+        # write code here
+
+        # 定义状态，偷到第i个房子时的最大金额dp[i]
+        # 状态转移：dp[i] = max(dg[i-2]+num[i],dg[i-1]) # 要么偷，要么不偷num[i]
+        # 剪枝
+        if len(nums) <= 0:
+            return 0
+        n = len(nums)
+
+        if len(nums) == 1:
+            return nums[0]
+        
+        if len(nums) == 2:
+            return  max(nums[0],nums[1])
+        
+        max_prepre = nums[0]
+        max_pre = max(nums[0],nums[1])
+        
+        for i in range(3,n+1):
+            cur = nums[i-1]
+            max_cur = max(cur+max_prepre,max_pre) # 状态转移
+            max_prepre = max_pre
+            max_pre = max_cur
+            
+        return max_cur
