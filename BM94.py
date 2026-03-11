@@ -56,7 +56,7 @@ class Solution1:
         # 维护两个指针 left，right用于遍历，移动哪个的条件为left_max和right_max 哪个小
         left,right = 0,len(arr)-1
         left_max,right_max = 0,0
-        total = 0
+        res = 0
 
         while left < right:
             left_max = max(left_max,arr[left])
