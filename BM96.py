@@ -55,3 +55,38 @@ class Solution:
                 host_for_current_period -= 1
                 j += 1
         return host_max
+
+class Solution: 
+    def minmumNumberOfHost(self , n: int, startEnd: List[List[int]]) -> int: 
+        # write code here
+        # 维护一个 host_max ，记录整个时间区间内同时所须的最多主持人
+        # 时刻盯着当前开始的活动
+        # 给最早开始、最早结束的区间安排一个主持人
+        # 向右移动活动开始指针，
+        # 如果扫进来的活动 开始时间 小于 最早结束时间
+        # 加派主持人，记录当前时间段所须的主持人，继续 向右移动活动开始指针，
+        # 如果扫进来的活动 开始时间 大于 最早结束时间
+        # 意味着这个活动可以使用 之前释放的一个主持人 host-1
+        # 结束时间指针后移，因为上一个结束时间已经小于 开始时间 可以开始负责新的区间了
+        
+        # 同一时间内，同时有多少个活动同时进行
+        
+        start = [e[0] for e in startEnd]
+        end = [e[1] for e in startEnd]
+        start.sort()
+        end.sort()
+        
+        i,j = 0,0
+        host_for_current_period = 0
+        host_max = 0
+        
+        while i < n: # 确保所有活动都考虑
+            # 一个时间段对应一个主持人，从 最早开始 和 最早结束 这个时间段开始
+            if start_sort[i] < end_sort[j]:        # 意味着当前时间段的活动还在进行，又开始了新的活动
+                host_for_current_period += 1
+                host_max = max(host_max,host_for_current_period)
+                i += 1
+            else:  # 开始以新起点开始的新的时间段的活动
+                host_for_current_period -= 1
+                j += 1
+        return host_max
